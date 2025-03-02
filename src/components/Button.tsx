@@ -36,6 +36,7 @@ export function Button({ type = "PRIMARY", title, ...rest }: Props) {
 const styles = StyleSheet.create({
   viewBtn: {
     width: "60%",
+    marginBottom: 18,
   },
   btn: {
     height: 52,

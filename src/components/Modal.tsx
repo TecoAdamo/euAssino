@@ -9,15 +9,27 @@ import {
   SafeAreaView,
   TouchableWithoutFeedback,
   TouchableOpacity,
+  TextInput,
 } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { InputField } from "./Input";
 
 type PropsModal = {
   open?: boolean;
+
   onClose: () => void;
   onOk: () => void;
   titleModal?: string;
   title: string;
+  errorMessage?: string;
+  name: string;
+  value: string;
+  subscriptionDate: string;
+  paymentDate: string;
+  onNameChange: (name: string) => void;
+  onValueChange: (value: string) => void;
+  onDateChange: (date: string) => void;
+  onPaymentDateChange: (date: string) => void;
 };
 
 export function ModalComp({
@@ -26,21 +38,45 @@ export function ModalComp({
   onOk,
   titleModal,
   title,
+  errorMessage,
+  name,
+  value,
+  subscriptionDate,
+  paymentDate,
+  onNameChange,
+  onValueChange,
+  onDateChange,
+  onPaymentDateChange,
+
   ...rest
 }: PropsModal) {
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.centeredView}>
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={open}
-          {...rest}
-        >
+        <Modal animationType="fade" transparent={true} visible={open} {...rest}>
           <TouchableWithoutFeedback onPress={onClose}>
             <View style={styles.centeredView}>
               <View style={styles.modalView}>
                 <Text style={styles.modalText}>{title}</Text>
+                <InputField
+                  value={name}
+                  onChange={onNameChange}
+                  placeholder="Informe o nome da assinatura:"
+                />
+                <InputField
+                  value={value}
+                  onChange={onValueChange}
+                  placeholder="Informe o valor mensal:"
+                />
+                <InputField
+                  value={subscriptionDate}
+                  onChange={onDateChange}
+                  placeholder="Informe a data da assinatura:"
+                />
+
+                {errorMessage ? (
+                  <Text style={styles.errorText}>{errorMessage}</Text>
+                ) : null}
                 <View style={styles.modalViewButtons}>
                   <TouchableOpacity style={styles.btn} onPress={onOk}>
                     <Text style={styles.textBtn}>Cadastrar</Text>
@@ -85,7 +121,12 @@ const styles = StyleSheet.create({
     padding: 10,
     elevation: 2,
   },
-
+  errorText: {
+    color: "red",
+    fontWeight: "bold",
+    textAlign: "center",
+    marginTop: 10,
+  },
   textStyle: {
     color: "white",
     fontWeight: "bold",
@@ -96,10 +137,11 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   modalViewButtons: {
-    gap: 8,
+    gap: 28,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
+    marginTop: 22,
   },
   btn: {
     backgroundColor: "#2196F3",
