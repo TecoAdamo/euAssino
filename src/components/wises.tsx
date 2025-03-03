@@ -1,26 +1,24 @@
-import React, { useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import Ionicons from "@expo/vector-icons/Ionicons";
+import React from "react";
+import { View, Text, StyleSheet } from "react-native";
 
 type Props = {
   wiseTitle: string;
   wiseValue: string;
   subscriptionDate: string;
-  paymentDate?: string;
 };
 
 export default function Wises({
   wiseTitle,
   wiseValue,
   subscriptionDate,
-  paymentDate,
 }: Props) {
   return (
     <View style={styles.container}>
-      <Text style={styles.wise}>📌 {wiseTitle}</Text>
-      <Text style={styles.details}>💰 Valor Mensal: R$ {wiseValue}</Text>
-      <Text style={styles.details}>📅 Assinatura: {subscriptionDate}</Text>
-      {/* <Text style={styles.details}>⏳ Vencimento: {paymentDate}</Text> */}
+      <Text style={styles.wise}>📌 {wiseTitle}</Text> {/* Nome da assinatura */}
+      <Text style={styles.details}>💰 Valor Mensal: R$ {wiseValue}</Text>{" "}
+      {/* Valor da assinatura */}
+      <Text style={styles.details}>📅 Assinatura: {subscriptionDate}</Text>{" "}
+      {/* Data da assinatura */}
     </View>
   );
 }

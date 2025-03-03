@@ -13,6 +13,7 @@ import {
 } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { InputField } from "./Input";
+import { Button } from "./Button";
 
 type PropsModal = {
   open?: boolean;
@@ -25,72 +26,52 @@ type PropsModal = {
   name: string;
   value: string;
   subscriptionDate: string;
-  paymentDate: string;
+
   onNameChange: (name: string) => void;
   onValueChange: (value: string) => void;
   onDateChange: (date: string) => void;
-  onPaymentDateChange: (date: string) => void;
 };
 
 export function ModalComp({
   open,
   onClose,
   onOk,
-  titleModal,
   title,
   errorMessage,
   name,
   value,
   subscriptionDate,
-  paymentDate,
+
   onNameChange,
   onValueChange,
   onDateChange,
-  onPaymentDateChange,
-
-  ...rest
 }: PropsModal) {
   return (
-    <SafeAreaProvider>
-      <SafeAreaView style={styles.centeredView}>
-        <Modal animationType="fade" transparent={true} visible={open} {...rest}>
-          <TouchableWithoutFeedback onPress={onClose}>
-            <View style={styles.centeredView}>
-              <View style={styles.modalView}>
-                <Text style={styles.modalText}>{title}</Text>
-                <InputField
-                  value={name}
-                  onChange={onNameChange}
-                  placeholder="Informe o nome da assinatura:"
-                />
-                <InputField
-                  value={value}
-                  onChange={onValueChange}
-                  placeholder="Informe o valor mensal:"
-                />
-                <InputField
-                  value={subscriptionDate}
-                  onChange={onDateChange}
-                  placeholder="Informe a data da assinatura:"
-                />
-
-                {errorMessage ? (
-                  <Text style={styles.errorText}>{errorMessage}</Text>
-                ) : null}
-                <View style={styles.modalViewButtons}>
-                  <TouchableOpacity style={styles.btn} onPress={onOk}>
-                    <Text style={styles.textBtn}>Cadastrar</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity style={styles.btn} onPress={onClose}>
-                    <Text style={styles.textBtn}>Cancelar</Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </View>
-          </TouchableWithoutFeedback>
-        </Modal>
-      </SafeAreaView>
-    </SafeAreaProvider>
+    <Modal animationType="fade" transparent={true} visible={open}>
+      <View style={styles.centeredView}>
+        <View style={styles.modalView}>
+          <Text style={styles.modalText}>{title}</Text>
+          <TextInput
+            value={name}
+            onChangeText={onNameChange}
+            placeholder="Informe o nome da assinatura:"
+          />
+          <TextInput
+            value={value}
+            onChangeText={onValueChange}
+            placeholder="Informe o valor mensal:"
+          />
+          <TextInput
+            value={subscriptionDate}
+            onChangeText={onDateChange}
+            placeholder="Informe a data de pagamento assinatura:"
+          />
+          {errorMessage ? <Text>{errorMessage}</Text> : null}
+          <Button title="Cadastrar" onPress={onOk} />
+          <Button title="Cancelar" onPress={onClose} />
+        </View>
+      </View>
+    </Modal>
   );
 }
 
